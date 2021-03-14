@@ -1,42 +1,39 @@
-const title = document.getElementById("title");
-const author = document.getElementById("author");
-const number = document.getElementById("number");
-const status = document.getElementById("checkbox");
-const submitButton = document.getElementById("submit-book");
-const bookList = document.getElementById("book-list");
-const form = document.querySelector("form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  addBookToLibrary();
-  render();
-});
+const submit = document.getElementById("submitBook");
+let myLibrary = [];
 
-const library = [];
-
-//cretating Constructor
-function Book(title, author, number, status) {
+//Book constructor
+function Book(title, author, number) {
   this.title = title;
   this.author = author;
   this.number = number;
-  this.status = status;
 }
 
-function addBookToLibrary() {
-  const newBook = new Book(title.value, author.value, number.value);
+submit.addEventListener("click", addBook);
 
-  library.push(newBook);
+function addBook(e) {
+  e.preventDefault();
+  const titleName = document.getElementById("titleBook").value;
+  const authorName = document.getElementById("author").value;
+  const pageNumber = document.getElementById("pageNumber").value;
+
+  let book = new Book(titleName, authorName, pageNumber);
+
+  getBooks(book);
 }
 
-function render() {
-  library.forEach((book) => {
-    const Book = `<tr>
-      <td>${book.title}</td>
-      <td>${book.author}</td>
-      <td>${book.number}</td>
-      
-      <td><button class="delete btn btn-danger">delete</button></td>
-    </tr>
-    `;
+function getBooks(book) {
+  const bookList = document.getElementById("bookList");
 
-    bookList.insertAdjacentHTML("afterbegin", Book);
-  });
+  //create Elemnt
+  const row = document.createElement("tr");
+
+  //insert cols
+  row.innerHTML = `
+  <td>${book.title}</td>
+  <td>${book.author}</td>
+  <td>${book.number}</td>
+  <td> <a href = "#" class = ""delete>X</a> </td>`;
+  console.log(book.number);
+
+  bookList.appendChild(row);
 }
