@@ -1,3 +1,11 @@
-/* body {
-  background: rgb(0, 179, 255);
-} */
+
+
+.success {
+  background: green;
+  color: aliceblue;
+}
+
+.error {
+  background: red;
+  color: white;
+}
