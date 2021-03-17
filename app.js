@@ -10,6 +10,9 @@ function Book(title, author, number, read) {
 
 submit.addEventListener("click", addBook);
 
+//Dom addeventListener
+// document.addEventListener("DOMContentLoad", getBookFromLocal);
+
 function addBook(e) {
   e.preventDefault();
   const titleName = document.getElementById("titleBook").value;
@@ -28,7 +31,9 @@ function addBook(e) {
     alert("Please write all information!!");
   } else {
     getBooks(book);
-    showMessage("Book Added", "success");
+    showMessage("Book Added", "success"); 
+ 
+
     clear();
   }
 }
@@ -40,12 +45,13 @@ function clear() {
 }
 
 function getBooks(book) {
+  
   const bookList = document.getElementById("bookList");
 
   //create Elemnt
   const row = document.createElement("tr");
-  // row.className = "delete";
-  //insert cols
+  
+  //creating the table
   row.innerHTML = `
   <td>${book.title}</td>
   <td>${book.author}</td>
@@ -54,6 +60,9 @@ function getBooks(book) {
   <td> <a href = "#" className="delete">X</a> </td>`;
   bookList.appendChild(row);
   // console.log(bookList);
+
+  //Local storge
+  populateStorage(book);
 }
 
 //show the message alert in DOM
@@ -61,7 +70,7 @@ function showMessage(message, classTitle) {
   const div = document.createElement("div");
   //Add Class
   div.className = `alert ${classTitle}`;
-  console.log(div);
+  // console.log(div);
   //Add text
   div.appendChild(document.createTextNode(message));
   //get parent
@@ -93,3 +102,17 @@ const bookList = document
     showMessage("Book Removed", "error");
     e.preventDefault();
   });
+
+function populateStorage(book) {
+  let books;
+  if (localStorage.getItem("books") === null) {
+    books = [];
+  } else {
+    books = JSON.parse(localStorage.getItem("books"));
+  }
+
+  books.push(book);
+
+  localStorage.setItem("books", JSON.stringify(books));
+  console.log(books);
+}
