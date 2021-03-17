@@ -11,7 +11,20 @@ function Book(title, author, number, read) {
 submit.addEventListener("click", addBook);
 
 //Dom addeventListener
-// document.addEventListener("DOMContentLoad", getBookFromLocal);
+document.addEventListener("DOMContentLoaded", () => {
+  // console.log(localStorage.getItem("books"));
+  let books;
+  if (localStorage.getItem("books") === null) {
+    books = [];
+  } else {
+    books = JSON.parse(localStorage.getItem("books"));
+  }
+  // const allBook = JSON.parse(localStorage.getItem("books"));
+  books.forEach((book) => getBooks(book));
+
+  // allBook.forEach((book) => getBooks(book));
+  console.log(books);
+});
 
 function addBook(e) {
   e.preventDefault();
@@ -31,9 +44,8 @@ function addBook(e) {
     alert("Please write all information!!");
   } else {
     getBooks(book);
-    showMessage("Book Added", "success"); 
- 
-
+    showMessage("Book Added", "success");
+    populateStorage(book);
     clear();
   }
 }
@@ -45,12 +57,11 @@ function clear() {
 }
 
 function getBooks(book) {
-  
   const bookList = document.getElementById("bookList");
 
   //create Elemnt
   const row = document.createElement("tr");
-  
+
   //creating the table
   row.innerHTML = `
   <td>${book.title}</td>
@@ -62,7 +73,6 @@ function getBooks(book) {
   // console.log(bookList);
 
   //Local storge
-  populateStorage(book);
 }
 
 //show the message alert in DOM
@@ -114,5 +124,4 @@ function populateStorage(book) {
   books.push(book);
 
   localStorage.setItem("books", JSON.stringify(books));
-  console.log(books);
 }
