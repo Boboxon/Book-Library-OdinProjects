@@ -1,5 +1,3 @@
-
-
 .success {
   background: green;
   color: aliceblue;
@@ -8,4 +6,8 @@
 .error {
   background: red;
   color: white;
+}
+
+body {
+  background: azure;
 }

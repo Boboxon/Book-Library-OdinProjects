@@ -66,8 +66,9 @@ function getBooks(book) {
   row.innerHTML = `
   <td>${book.title}</td>
   <td>${book.author}</td>
-  <td>${book.number}</td>
+  
   <td >${book.read ? "Read" : "Not Read"}</td>
+  <td>${book.number}</td>
   <td> <a href = "#" className="delete">X</a> </td>`;
   bookList.appendChild(row);
   // console.log(bookList);
@@ -104,6 +105,27 @@ function removeItem(target) {
   }
 }
 
+//remove from ls
+function removeFromLs(taskItem) {
+  let books;
+  if (localStorage.getItem("books") === null) {
+    books = [];
+  } else {
+    books = JSON.parse(localStorage.getItem("books"));
+  }
+
+  // const mybook = JSON.parse(localStorage.getItem("books"));
+
+  books.forEach(function (task, index) {
+    if (task.number === taskItem) {
+      books.splice(index, 1);
+    }
+  });
+
+  localStorage.setItem("books", JSON.stringify(books));
+  console.log(taskItem);
+}
+
 //addevent Listener to remove button
 const bookList = document
   .getElementById("bookList")
@@ -111,6 +133,7 @@ const bookList = document
     removeItem(e.target);
     showMessage("Book Removed", "error");
     e.preventDefault();
+    removeFromLs(e.target.parentElement.previousElementSibling.textContent);
   });
 
 function populateStorage(book) {
